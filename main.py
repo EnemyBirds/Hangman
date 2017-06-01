@@ -22,24 +22,36 @@ while True:
     # Print number of lives and a visual of how many letters in RandWord
     print('You have', NumLives, 'lives.', 'Let\'s begin!')
     print(HangmanFuncts.draw_spaces(RandWord, GuessLetter), '\n')
-
+    
+    # Create for future winningness loop breaking
     Winner = False
 
+    # As long as you have lives, you are good to go
     while NumLives > 0:
-
+        
+        # If there are no '_' that means all of the letters have replaced them and the word if complete
+        # You win!
         if '_' not in HangmanFuncts.draw_spaces(RandWord, GuessLetter):
             Winner = True
             break
-
+            
+        # Holds the user's guessed letter
         Guess = str.lower(input('Enter a lower case letter: '))
-
+        
+        # If their guess is not a letter, make them enter a guess again
+        if not str.isalpha(Guess):
+            print('You suck. That is not even a letter.')
+            continue
+        
+        # See if the guessed letter is in the word
         if Guess in RandWord:
             print('You got one!')
             GuessLetter += Guess
         else:
             NumLives -= 1
             print('Nope! Try Again. Remaining guesses:', NumLives, '\n')
-
+        
+        # If the letter is in the word, replace the underscore with the letter
         print(HangmanFuncts.draw_spaces(RandWord, GuessLetter))
 
     if Winner:
