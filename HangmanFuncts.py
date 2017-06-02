@@ -11,7 +11,7 @@ def random_word(words):
     return rand_word
 
 
-def draw_spaces(randword, guessletter):
+def draw_spaces(randword, guessreference):
     # Create a variable to keep count of how many times we have looped and
     # make sure we don't go past the length of the Word
     count = 0
@@ -21,7 +21,7 @@ def draw_spaces(randword, guessletter):
 
     # While the Count is less than the length of the RandWord, add an underscore
     while count < len(randword):
-        if randword[count] in guessletter:
+        if randword[count] in guessreference:
             spaces += (randword[count] + ' ')
         else:
             spaces += '_ '

@@ -14,14 +14,17 @@ while True:
     RandWord = HangmanFuncts.random_word(Words)
 
     # Create a variable to hold correct letters to compare against RandWord
-    GuessLetter = ''
+    GuessReference = ''
+
+    # Create a variable to hold all guessed letters to prevent guessing the same letter
+    AllGuessedLetters = ''
 
     # Pick an arbitrary number for the max number of guesses
     NumLives = 3
 
     # Print number of lives and a visual of how many letters in RandWord
     print('You have', NumLives, 'lives.', 'Let\'s begin!')
-    print(HangmanFuncts.draw_spaces(RandWord, GuessLetter), '\n')
+    print(HangmanFuncts.draw_spaces(RandWord, GuessReference), '\n')
     
     # Create for future winningness loop breaking
     Winner = False
@@ -31,7 +34,7 @@ while True:
         
         # If there are no '_' that means all of the letters have replaced them and the word if complete
         # You win!
-        if '_' not in HangmanFuncts.draw_spaces(RandWord, GuessLetter):
+        if '_' not in HangmanFuncts.draw_spaces(RandWord, GuessReference):
             Winner = True
             break
             
@@ -42,17 +45,25 @@ while True:
         if not str.isalpha(Guess):
             print('You suck. That is not even a letter.')
             continue
+        elif len(Guess) > 1:
+            print('You suck. That\'s too many letters.')
+            continue
+        elif Guess in AllGuessedLetters:
+            print('You suck. you already guessed that.')
+            continue
+
+        AllGuessedLetters += Guess
         
         # See if the guessed letter is in the word
         if Guess in RandWord:
             print('You got one!')
-            GuessLetter += Guess
+            GuessReference += Guess
         else:
             NumLives -= 1
             print('Nope! Try Again. Remaining guesses:', NumLives, '\n')
         
         # If the letter is in the word, replace the underscore with the letter
-        print(HangmanFuncts.draw_spaces(RandWord, GuessLetter))
+        print(HangmanFuncts.draw_spaces(RandWord, GuessReference))
 
     if Winner:
         print('Hooray! You won!\n')
